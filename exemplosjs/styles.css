@@ -1,0 +1,29 @@
+/* styles.css - CSS compartilhado entre as páginas do projeto exemplosjs */
+
+/* Ícone flutuante do GitHub usado em todas as páginas */
+.github-float {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 999;
+  background: #232946;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px #00e6d6;
+  padding: 12px;
+  transition: transform 0.2s;
+}
+.github-float:hover {
+  transform: scale(1.12) rotate(-8deg);
+  box-shadow: 0 8px 32px #39ff14;
+}
+.github-float img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  filter: drop-shadow(0 0 4px #39ff14);
+}
+
+/* Pequeno ajuste responsivo: reduzir ícone em telas muito pequenas */
+@media (max-width: 420px) {
+  .github-float img { width: 34px; height: 34px; }
+}

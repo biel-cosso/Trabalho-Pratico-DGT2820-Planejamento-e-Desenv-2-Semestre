@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('bg_pixel_1.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      font-family: 'Orbitron', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      color: #39ff14;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #39ff14;
+      background: #232946;
+      border: 2px solid #00e6d6;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #00e6d6, 0 0 0 8px #232946 inset;
+      text-shadow: 2px 2px 0 #00e6d6, 0 0 12px #39ff14, 0 0 24px #00e6d6;
+      padding: 20px 0 16px 0;
+      margin-bottom: 36px;
+      letter-spacing: 5px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      font-family: 'Orbitron', Arial, sans-serif;
+    }
+    label, select, input {
+      color: #fff !important;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #232946;
+      font-family: 'Orbitron', Arial, sans-serif;
+    }
+    #algoritmo {
+      background: #232946;
+      color: #39ff14;
+      border: 2px solid #00e6d6;
+      border-radius: 8px;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.1rem;
+      padding: 6px 12px;
+    }
+    #valor {
+      background: #232946;
+      color: #39ff14;
+      border: 2px solid #00e6d6;
+      border-radius: 8px;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.1rem;
+      padding: 6px 12px;
+    }
+    ul#valores {
+      color: #39ff14;
+      text-shadow: 1px 1px 2px #232946;
+      font-size: 1.2rem;
+      font-family: 'Orbitron', Arial, sans-serif;
+    }
+    button {
+      font-family: 'Orbitron', Arial, sans-serif;
+      background: #00e6d6;
+      color: #232946;
+      border: 2px solid #39ff14;
+      border-radius: 10px;
+      padding: 10px 22px;
+      margin: 6px 2px;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 12px #00e6d6;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    button:hover {
+      background: #39ff14;
+      color: #232946;
+      transform: scale(1.08);
+      box-shadow: 0 4px 24px #39ff14;
+    }
+    /* .github-float moved to styles.css (shared) */
+  </style>
+  <meta charset="UTF-8">
+  <title>Ordenando - Algoritmos e DOM</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Ordenando - Algoritmos e DOM</h1>
+
+  <div class="centralizado">
+    <input type="number" id="valor" placeholder="Valor" style="width: 100%; max-width: 260px; box-sizing: border-box;">
+    <div style="margin-bottom: 18px;">
+      <button onclick="add()">Adicionar</button>
+    </div>
+
+    <select id="algoritmo" style="width: 100%; max-width: 260px; box-sizing: border-box;" title="Algoritmo">
+      <option value="" disabled selected>Algoritmo</option>
+      <option value="bubble_sort">Bubble Sort</option>
+      <option value="selection_sort">Selection Sort</option>
+      <option value="quick_sort">Quick Sort</option>
+    </select>
+    <div style="margin-bottom: 18px;">
+      <button onclick="ordenar()">Ordenar</button>
+      <button onclick="misturar()">Misturar</button>
+    </div>
+  </div>
+
+  <ul id="valores"></ul>
+
+  <!-- Arquivo externo com funções de ordenação -->
+  <script src="ordenando.js"></script>
+
+  <!-- Funções principais -->
+  <script>
+    let valores = [];
+
+    function add() {
+      const input = document.getElementById("valor");
+      if (input.value !== "") {
+        valores.push(parseInt(input.value));
+        input.value = "";
+        atualizarLista(valores);
+      }
+    }
+
+    function ordenar() {
+      const algoritmo = document.getElementById("algoritmo").value;
+      let vetor = valores.slice();
+      if (algoritmo === "bubble_sort") {
+        vetor = bubble_sort(vetor);
+      } else if (algoritmo === "selection_sort") {
+        vetor = selection_sort(vetor);
+      } else if (algoritmo === "quick_sort") {
+        vetor = quick_sort(vetor, 0, vetor.length - 1);
+      }
+      atualizarLista(vetor);
+      valores = vetor;
+    }
+
+    function atualizarLista(arr) {
+      const lista = document.getElementById("valores");
+      lista.innerHTML = arr.map(v => `<li>${v}</li>`).join("");
+    }
+
+    function misturar() {
+  let vetor = valores.slice();
+  // Embaralha usando shuffle (10 trocas)
+  vetor = shuffle(vetor, 10);
+  // Atualiza a lista usando map/reduce
+  const lista = document.getElementById("valores");
+  lista.innerHTML = vetor.map(v => `<li>${v}</li>`).reduce((a, b) => a + b, "");
+  valores = vetor;
+    }
+  </script>
+</body>
+  <!-- Ícone flutuante do GitHub -->
+  <a href="https://github.com/biel-cosso" class="github-float" target="_blank" title="Meu GitHub">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+  </a>
+</html>
